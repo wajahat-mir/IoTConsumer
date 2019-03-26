@@ -15,8 +15,6 @@ namespace IoTConsumer
 {
     class Program
     {
-        private static readonly IServiceProvider ServiceProvider;
-
         static void Main(string[] args)
         {
             var container = CompositionRoot();
