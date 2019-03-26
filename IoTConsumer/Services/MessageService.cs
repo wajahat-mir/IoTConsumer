@@ -20,7 +20,6 @@ namespace IoTConsumer.Services
         private IDBService _dbService;
         private readonly ILogger _logger;
 
-        //public MessageService(IConfiguration configuration, IDBService dBService)
         public MessageService(IConfiguration configuration, ILogger<MessageService> logger, IDBService dbService)
         {
             _configuration = configuration;
