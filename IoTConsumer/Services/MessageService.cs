@@ -21,10 +21,10 @@ namespace IoTConsumer.Services
         private readonly ILogger _logger;
 
         //public MessageService(IConfiguration configuration, IDBService dBService)
-        public MessageService(IConfiguration configuration, ILogger<MessageService> logger)
+        public MessageService(IConfiguration configuration, ILogger<MessageService> logger, IDBService dbService)
         {
             _configuration = configuration;
-            //_dbService = dBService;
+            _dbService = dbService;
             _logger = logger;
 
             ServiceBusConnectionString = _configuration["MessageBusSettings:ConnectionString"];
@@ -69,7 +69,7 @@ namespace IoTConsumer.Services
             Console.WriteLine("IoT Message: " + iotmessage.message);
 
             // save to DB
-            //_dbService.SaveMessagetoDatabase(iotmessage);
+            _dbService.SaveMessagetoDatabase(iotmessage);
 
             await queueClient.CompleteAsync(message.SystemProperties.LockToken);
         }

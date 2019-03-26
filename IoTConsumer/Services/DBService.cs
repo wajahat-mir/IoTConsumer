@@ -23,11 +23,10 @@ namespace IoTConsumer.Services
             _logger = logger;
 
             var options = new Cassandra.SSLOptions(SslProtocols.Tls12, true, ValidateServerCertificate);
-            options.SetHostNameResolver((ipAddress) => _configuration["DatabaseSettings:Endpoint"]);
+            options.SetHostNameResolver((ipAddress) => _configuration["DatabaseSettings:ContactPoint"]);
 
-            Cluster cluster = Cluster.Builder().WithCredentials(_configuration["DatabaseSettings:UserName"], _configuration["DatabaseSettings:Password"])
-                .WithPort(Convert.ToInt32(_configuration["DatabaseSettings:Port"])).AddContactPoint(_configuration["DatabaseSettings:Endpoint"]).WithSSL(options).Build();
-            ISession session = cluster.Connect();
+            cluster = Cluster.Builder().WithCredentials(_configuration["DatabaseSettings:UserName"], _configuration["DatabaseSettings:Password"])
+                .WithPort(Convert.ToInt32(_configuration["DatabaseSettings:Port"])).AddContactPoint(_configuration["DatabaseSettings:ContactPoint"]).WithSSL(options).Build();
         }
 
         public bool SaveMessagetoDatabase(SaveIoTMessage iotmessage)
